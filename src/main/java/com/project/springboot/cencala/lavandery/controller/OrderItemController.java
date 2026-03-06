@@ -11,38 +11,38 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/order-items")
+@RequestMapping("/api/order-item")
 @AllArgsConstructor
 public class OrderItemController {
 
     private final OrderItemService orderItemService;
 
     @GetMapping
-    public ResponseEntity<List<OrderItemDto>> getAllOrderItems() {
-        return ResponseEntity.ok(orderItemService.getAllOrderItems());
+    public ResponseEntity<List<OrderItemDto>> findAll() {
+        return ResponseEntity.ok(orderItemService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderItemDto> getOrderItemById(@PathVariable Integer id) {
-        return ResponseEntity.ok(orderItemService.getOrderItemById(id));
+    public ResponseEntity<OrderItemDto> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(orderItemService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<OrderItemDto> createOrderItem(@RequestBody OrderItemRequestDto dto) {
-        OrderItemDto created = orderItemService.createOrderItem(dto);
+    public ResponseEntity<OrderItemDto> save(@RequestBody OrderItemRequestDto dto) {
+        OrderItemDto created = orderItemService.save(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderItemDto> updateOrderItem(@PathVariable Integer id,
+    public ResponseEntity<OrderItemDto> update(@PathVariable Integer id,
                                                         @RequestBody OrderItemRequestDto dto) {
-        OrderItemDto updated = orderItemService.updateOrderItem(id, dto);
+        OrderItemDto updated = orderItemService.update(id, dto);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrderItem(@PathVariable Integer id) {
-        orderItemService.deleteOrderItem(id);
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        orderItemService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

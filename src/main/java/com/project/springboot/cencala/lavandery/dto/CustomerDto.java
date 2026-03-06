@@ -18,6 +18,6 @@ public class CustomerDto {
     private String companyName;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
-    private String legIdTypeName;
+    private LegIdTypeDto legIdType;
 }
 

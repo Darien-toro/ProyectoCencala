@@ -23,7 +23,7 @@ public class CustomerService {
     private final CustomerMapper customerMapper;
 
     public CustomerDto createCustomer(CustomerCreateDto dto){
-        LegIdTypeEntity legIdTypeEntity = legIdTypeRepository.findById(dto.getLegIdTypeId())
+        LegIdTypeEntity legIdTypeEntity = legIdTypeRepository.findById(dto.getLegIdType().getId())
         .orElseThrow(() -> new RuntimeException("Id no encontrado"));
 
         CustomerEntity entity = customerMapper.toEntity(dto);
@@ -57,8 +57,8 @@ public class CustomerService {
         .orElseThrow(() -> new RuntimeException("No encontrado"));
 
 
-        if (dto.getLegIdTypeId() != null) {
-            legIdTypeRepository.findById(dto.getLegIdTypeId())
+        if (dto.getLegIdType().getId() != null) {
+            legIdTypeRepository.findById(dto.getLegIdType().getId())
                 .orElseThrow(() -> new RuntimeException(" tipo no encontrado"));
         }
         CustomerEntity customerEntity = customerMapper.toEntity(dto);

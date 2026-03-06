@@ -15,5 +15,5 @@ public class InvoiceOrderDTO {
     private Long orderCount;
     private BigDecimal totalAmount;
     private BigDecimal compensationAmount;
-    private Integer customerId; // en lugar de exponer toda la entidad CustomerEntity
+    private CustomerDto customer;
 }

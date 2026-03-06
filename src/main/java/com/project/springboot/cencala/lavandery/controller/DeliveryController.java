@@ -17,7 +17,7 @@ import com.project.springboot.cencala.lavandery.service.DeliveryService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api/deliveries")
+@RequestMapping("/api/delivery")
 @AllArgsConstructor
 public class DeliveryController {
 

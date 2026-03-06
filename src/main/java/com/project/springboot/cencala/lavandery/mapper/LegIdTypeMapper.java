@@ -8,7 +8,6 @@ import com.project.springboot.cencala.lavandery.entity.LegIdTypeEntity;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface LegIdTypeMapper {
-
     LegIdTypeDto toDto(LegIdTypeEntity entity);
     LegIdTypeEntity  toEntity(LegIdTypeDto dto);
 }

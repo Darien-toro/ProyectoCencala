@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class DeliveryDto {
-
     private Integer id;
     private LocalDateTime createDate; 
-    private Integer orderId;
+    private OrderDto order;
 }

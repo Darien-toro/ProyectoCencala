@@ -10,6 +10,6 @@ public class InvoiceOrderItemDTO {
     private Integer id;
     private BigDecimal totalAmount;
     private BigDecimal compensationAmount;
-    private Integer orderId;        // en lugar de OrderEntity completa
-    private Integer invoiceOrderId; // en lugar de InvoiceOrderEntity completa
+    private OrderDto order;
+    private InvoiceOrderDTO invoiceOrder;
 }

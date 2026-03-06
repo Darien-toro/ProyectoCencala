@@ -13,12 +13,10 @@ public class OrderWithItemsDto {
     private String orderCode;
     private LocalDateTime creationDate;
     private Integer customerId;
-
     private Integer itemId;
     private Integer quantity;
     private BigDecimal unitAmount;
     private BigDecimal totalAmount;
-
     private Integer productId;
     private String productName;
 }

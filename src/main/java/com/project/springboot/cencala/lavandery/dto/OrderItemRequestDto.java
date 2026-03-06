@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class OrderItemRequestDto {
     private Integer quantity;
-    private Integer productId; // el cliente envía el ID del producto
-    private Integer orderId;   // el cliente envía el ID de la orden
+    private ProductDto product; // el cliente envía el ID del producto
+    private OrderDto order;   // el cliente envía el ID de la orden
 }
 

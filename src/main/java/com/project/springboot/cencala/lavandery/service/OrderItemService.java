@@ -24,29 +24,29 @@ public class OrderItemService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
 
-    public List<OrderItemDto> getAllOrderItems() {
+    public List<OrderItemDto> findAll() {
         return orderItemRepository.findAll()
                 .stream()
                 .map(orderItemMapper::toDto)
                 .toList();
     }
 
-    public OrderItemDto getOrderItemById(Integer id) {
+    public OrderItemDto findById(Integer id) {
         OrderItemEntity entity = orderItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order Item no encontrado"));
         return orderItemMapper.toDto(entity);
     }
 
-    public OrderItemDto createOrderItem(OrderItemRequestDto dto) {
+    public OrderItemDto save(OrderItemRequestDto dto) {
         OrderItemEntity entity = orderItemMapper.toEntity(dto);
 
         // Buscar producto y asignar precio
-        ProductEntity product = productRepository.findById(dto.getProductId())
+        ProductEntity product = productRepository.findById(dto.getProduct().getId())
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
         entity.setProductEntity(product);
 
         // Buscar orden
-        OrderEntity order = orderRepository.findById(dto.getOrderId())
+        OrderEntity order = orderRepository.findById(dto.getOrder().getId())
                 .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
         entity.setOrderEntity(order);
 
@@ -60,24 +60,21 @@ public class OrderItemService {
         return orderItemMapper.toDto(saved);
     }
 
-    public OrderItemDto updateOrderItem(Integer id, OrderItemRequestDto dto) {
+    public OrderItemDto update(Integer id, OrderItemRequestDto dto) {
         OrderItemEntity entity = orderItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order Item no encontrado"));
 
-        // Actualizar campos básicos con el mapper
-        orderItemMapper.updateEntityFromDto(dto, entity);
-
         // Reasignar producto y precio
-        if (dto.getProductId() != null) {
-            ProductEntity product = productRepository.findById(dto.getProductId())
+        if (dto.getProduct().getId() != null) {
+            ProductEntity product = productRepository.findById(dto.getProduct().getId())
                     .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
             entity.setProductEntity(product);
             entity.setUnitAmount(product.getPriceAmount());
         }
 
         // Reasignar orden
-        if (dto.getOrderId() != null) {
-            OrderEntity order = orderRepository.findById(dto.getOrderId())
+        if (dto.getOrder().getId() != null) {
+            OrderEntity order = orderRepository.findById(dto.getOrder().getId())
                     .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
             entity.setOrderEntity(order);
         }
@@ -91,7 +88,7 @@ public class OrderItemService {
         return orderItemMapper.toDto(updated);
     }
 
-    public void deleteOrderItem(Integer id) {
+    public void delete(Integer id) {
         OrderItemEntity entity = orderItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order Item no encontrado"));
         orderItemRepository.delete(entity);

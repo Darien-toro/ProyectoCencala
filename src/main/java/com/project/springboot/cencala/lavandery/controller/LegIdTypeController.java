@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/apis")
+@RequestMapping("/api/legal-id-type")
 public class LegIdTypeController {
 
     private final LegIdTypeService legIdTypeService;
@@ -31,23 +31,23 @@ public class LegIdTypeController {
     }
 
     @GetMapping("/{id}")
-    public LegIdTypeDto getTypeId(@PathVariable Integer id){
-        return legIdTypeService.getTypeId(id);
+    public LegIdTypeDto findById(@PathVariable Integer id){
+        return legIdTypeService.findById(id);
     }
 
     @PostMapping
-    public LegIdTypeDto saveId(@RequestBody LegIdTypeDto dto){
-        return legIdTypeService.saveId(dto);
+    public LegIdTypeDto save(@RequestBody LegIdTypeDto dto){
+        return legIdTypeService.save(dto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Integer id){
-        legIdTypeService.deleteTypeID(id);
+    public void delete(@PathVariable Integer id){
+        legIdTypeService.delete(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LegIdTypeDto> updateLegIdType(@PathVariable Integer id, @RequestBody LegIdTypeDto dto){
-        LegIdTypeDto update = legIdTypeService.updateLegIdType(id, dto);
+    public ResponseEntity<LegIdTypeDto> update(@PathVariable Integer id, @RequestBody LegIdTypeDto dto){
+        LegIdTypeDto update = legIdTypeService.update(id, dto);
         return ResponseEntity.ok(update);
     }
 }

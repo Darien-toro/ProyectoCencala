@@ -11,6 +11,4 @@ import com.project.springboot.cencala.lavandery.entity.OrderStatusEntity;
 public interface OrderStatusMapper {
     OrderStatusDto toDTO(OrderStatusEntity entity);
     OrderStatusEntity toEntity(OrderStatusDto dto);
-    @Mapping(target = "id", ignore = true)
-    void updateEntityFromDto(OrderStatusDto dto, @MappingTarget OrderStatusEntity entity);
 }

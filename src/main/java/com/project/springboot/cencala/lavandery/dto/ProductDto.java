@@ -13,7 +13,7 @@ public class ProductDto {
     private BigDecimal priceAmount;
     private LocalDateTime creationDate;
     private LocalDateTime lastUpdate;
-    private String productLineName;
+    private ProductLineDto productLine;
 }
 
 

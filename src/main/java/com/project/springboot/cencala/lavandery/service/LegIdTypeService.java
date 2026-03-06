@@ -26,25 +26,25 @@ public class LegIdTypeService {
         .collect(Collectors.toList());
     }
     
-    public LegIdTypeDto getTypeId(Integer id){
+    public LegIdTypeDto findById(Integer id){
         return legIdTypeRepository.findById(id)
         .map(legIdTypeMapper::toDto)
         .orElse(null);
     }
 
-    public LegIdTypeDto  saveId(LegIdTypeDto dto){
+    public LegIdTypeDto  save(LegIdTypeDto dto){
         return legIdTypeMapper.toDto(legIdTypeRepository.save(legIdTypeMapper.toEntity(dto)));
     }
 
-    public void deleteTypeID(Integer id){
+    public void delete(Integer id){
         legIdTypeRepository.deleteById(id);
     }
 
-    public LegIdTypeDto updateLegIdType(Integer id, LegIdTypeDto dto){
+    public LegIdTypeDto update(Integer id, LegIdTypeDto dto){
         LegIdTypeEntity entity = legIdTypeRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("No encontrado"));
 
-        LegIdTypeEntity update = legIdTypeRepository.save(entity);
+        LegIdTypeEntity update = legIdTypeRepository.save(legIdTypeMapper.toEntity(dto));
         return legIdTypeMapper.toDto(update);
     }
 }

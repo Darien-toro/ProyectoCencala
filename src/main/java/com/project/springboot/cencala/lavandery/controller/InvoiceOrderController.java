@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/invoice-orders")
+@RequestMapping("/api/invoice-order")
 @AllArgsConstructor
 public class InvoiceOrderController {
 

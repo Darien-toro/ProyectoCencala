@@ -9,10 +9,6 @@ import com.project.springboot.cencala.lavandery.entity.InvoiceOrderEntity;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface InvoiceOrderMapper {
-
-    @Mapping(source = "customerEntity.id", target = "customerId")
     InvoiceOrderDTO toDTO(InvoiceOrderEntity entity);
-
-    @Mapping(source = "customerId", target = "customerEntity.id")
     InvoiceOrderEntity toEntity(InvoiceOrderDTO dto);
 }

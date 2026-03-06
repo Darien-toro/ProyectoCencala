@@ -7,25 +7,15 @@ import com.project.springboot.cencala.lavandery.dto.ProductRequestDto;
 import com.project.springboot.cencala.lavandery.dto.ProductDto;
 import com.project.springboot.cencala.lavandery.entity.ProductEntity;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = ProductLineMapper.class)
 public interface ProductMapper {
-
-    // Entity → ResponseDto (para GET)
-    @Mapping(source = "productLineEntity.name", target = "productLineName")
+    @Mapping(source = "productLineEntity.id", target = "productLine.id")
+    @Mapping(source = "productLineEntity.name", target = "productLine.name")
+    @Mapping(source = "productLineEntity.description", target = "productLine.description")
     ProductDto toDto(ProductEntity entity);
-
-    // RequestDto → Entity (para POST)
-    @Mapping(source = "productLineId", target = "productLineEntity.id")
-    @Mapping(target = "id", ignore = true) 
-    @Mapping(target = "creationDate", ignore = true) 
-    @Mapping(target = "lastUpdate", ignore = true)
+    @Mapping(source = "productLine.id", target = "productLineEntity.id")
+    @Mapping(source = "productLine.name", target = "productLineEntity.name")
+    @Mapping(source = "productLine.description", target = "productLineEntity.description")
     ProductEntity toEntity(ProductRequestDto dto);
-
-    // RequestDto → actualizar entidad existente (para PUT)
-    @Mapping(source = "productLineId", target = "productLineEntity.id")
-    @Mapping(target = "id", ignore = true) 
-    @Mapping(target = "creationDate", ignore = true) 
-    @Mapping(target = "lastUpdate", ignore = true)
-    void updateEntityFromDto(ProductRequestDto dto, @MappingTarget ProductEntity entity);
 }
 

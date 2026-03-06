@@ -19,34 +19,34 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/order-status")
 public class OrderStatusController {
 
     private final OrderStatusService orderStatusService;
 
     @GetMapping
-    public List<OrderStatusDto> getALLOrderStatus(){
-        return orderStatusService.getALLOrderStatu();
+    public List<OrderStatusDto> findAll(){
+        return orderStatusService.findAll();
     }
 
     @GetMapping("/{id}")
-    public OrderStatusDto getOrderStatusById(@PathVariable Integer id){
-        return orderStatusService.getOrderStatusByYd(id);
+    public OrderStatusDto findById(@PathVariable Integer id){
+        return orderStatusService.findById(id);
     }
 
     @PostMapping
-    public OrderStatusDto  createOrderStatusDto(@RequestBody OrderStatusDto dto){
-        return orderStatusService.saveOrderStatu(dto);
+    public OrderStatusDto save(@RequestBody OrderStatusDto dto){
+        return orderStatusService.save(dto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrderStatus(@PathVariable Integer id){
-        orderStatusService.deleteOrderStatu(id);
+    public void delete(@PathVariable Integer id){
+        orderStatusService.delete(id);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<OrderStatusDto> updateOrderStatus(@PathVariable Integer id, @RequestBody OrderStatusDto dto){
-        OrderStatusDto update = orderStatusService.updateOrderStatus(id, dto);
+    public ResponseEntity<OrderStatusDto> update(@PathVariable Integer id, @RequestBody OrderStatusDto dto){
+        OrderStatusDto update = orderStatusService.update(id, dto);
         return ResponseEntity.ok(update);
     }
 }

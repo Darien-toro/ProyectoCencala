@@ -9,5 +9,5 @@ public class ProductRequestDto {
     private String name;
     private String description;
     private BigDecimal priceAmount;
-    private Integer productLineId; // 👈 aquí sí necesitamos el ID
+    private ProductLineDto productLine;
 }

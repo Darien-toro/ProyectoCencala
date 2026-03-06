@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/customer")
 public class CustomerController {
 
     private final CustomerService customerService;

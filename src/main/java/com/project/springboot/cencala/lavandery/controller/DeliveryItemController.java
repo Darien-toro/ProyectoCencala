@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/delivery-items")
+@RequestMapping("/api/delivery-item")
 @AllArgsConstructor
 public class DeliveryItemController {
 

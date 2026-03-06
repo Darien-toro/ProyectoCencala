@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class LegIdTypeDto {
-
     private Integer id;
     private String abbrev;
     private String name;
-
 }

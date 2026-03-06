@@ -21,34 +21,31 @@ public class OrderStatusService {
 
     private final OrderStatusMapper orderStatusMapper;
 
-    public List<OrderStatusDto> getALLOrderStatu(){
+    public List<OrderStatusDto> findAll(){
         return orderStatusRepository.findAll().stream()
             .map(orderStatusMapper::toDTO)
             .collect(Collectors.toList());
     }
 
-    public OrderStatusDto getOrderStatusByYd(Integer id){
+    public OrderStatusDto findById(Integer id){
         return orderStatusRepository.findById(id)
         .map(orderStatusMapper::toDTO)
         .orElse(null);
     }
 
-    public OrderStatusDto saveOrderStatu(OrderStatusDto dto){
+    public OrderStatusDto save(OrderStatusDto dto){
         OrderStatusEntity savedEntity = orderStatusRepository.save(orderStatusMapper.toEntity(dto));
         return orderStatusMapper.toDTO(savedEntity);
     }
 
-    public void deleteOrderStatu(Integer id){
+    public void delete(Integer id){
         orderStatusRepository.deleteById(id);
     }
 
-    public OrderStatusDto updateOrderStatus(Integer id, OrderStatusDto dto){
+    public OrderStatusDto update(Integer id, OrderStatusDto dto){
         OrderStatusEntity entity = orderStatusRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("No encontrado"));
-
-        orderStatusMapper.updateEntityFromDto(dto, entity);
-
-        OrderStatusEntity update = orderStatusRepository.save(entity);
+        OrderStatusEntity update = orderStatusRepository.save(orderStatusMapper.toEntity(dto));
         return orderStatusMapper.toDTO(update);
     }
 }

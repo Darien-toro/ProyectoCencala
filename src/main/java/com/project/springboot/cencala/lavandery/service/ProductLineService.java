@@ -17,37 +17,37 @@ public class ProductLineService {
     private final ProductLineRepository productLineRepository;
     private final ProductLineMapper productLineMapper;
 
-    public List<ProductLineDto> getAllProductLines() {
+    public List<ProductLineDto> findAll() {
         return productLineRepository.findAll()
                 .stream()
                 .map(productLineMapper::toDto)
                 .toList();
     }
 
-    public ProductLineDto getProductLineById(Integer id) {
+    public ProductLineDto findById(Integer id) {
         ProductLineEntity entity = productLineRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Línea de producto no encontrada"));
         return productLineMapper.toDto(entity);
     }
 
-    public ProductLineDto createProductLine(ProductLineDto dto) {
+    public ProductLineDto save(ProductLineDto dto) {
         ProductLineEntity entity = productLineMapper.toEntity(dto);
-        ProductLineEntity saved = productLineRepository.save(entity);
+        ProductLineEntity saved = productLineRepository.save(productLineMapper.toEntity(dto));
         return productLineMapper.toDto(saved);
     }
 
-    public ProductLineDto updateProductLine(Integer id, ProductLineDto dto) {
+    public ProductLineDto update(Integer id, ProductLineDto dto) {
         ProductLineEntity entity = productLineRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Línea de producto no encontrada"));
 
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
 
-        ProductLineEntity updated = productLineRepository.save(entity);
+        ProductLineEntity updated = productLineRepository.save(productLineMapper.toEntity(dto));
         return productLineMapper.toDto(updated);
     }
 
-    public void deleteProductLine(Integer id) {
+    public void delete(Integer id) {
         ProductLineEntity entity = productLineRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Línea de producto no encontrada"));
         productLineRepository.delete(entity);

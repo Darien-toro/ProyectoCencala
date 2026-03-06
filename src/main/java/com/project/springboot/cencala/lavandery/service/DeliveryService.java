@@ -35,8 +35,8 @@ public class DeliveryService {
     public DeliveryDto createDelivery(DeliveryDto dto) {
         DeliveryEntity entity = deliveryMapper.toEntity(dto);
 
-        if (dto.getOrderId() != null) {
-            entity.setOrderEntity(orderRepository.findById(dto.getOrderId())
+        if (dto.getOrder().getId() != null) {
+            entity.setOrderEntity(orderRepository.findById(dto.getOrder().getId())
                     .orElseThrow(() -> new RuntimeException("Orden no encontrada")));
         }
 
@@ -48,8 +48,8 @@ public class DeliveryService {
         DeliveryEntity entity = deliveryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Entrega no encontrada"));
 
-        if (dto.getOrderId() != null) {
-            entity.setOrderEntity(orderRepository.findById(dto.getOrderId())
+        if (dto.getOrder().getId() != null) {
+            entity.setOrderEntity(orderRepository.findById(dto.getId())
                     .orElseThrow(() -> new RuntimeException("Orden no encontrada")));
         }
 

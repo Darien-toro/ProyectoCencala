@@ -13,5 +13,5 @@ public class CustomerCreateDto {
     private String firstName;
     private String lastName;
     private String companyName;
-    private Integer legIdTypeId;
+    private LegIdTypeDto legIdType;
 }

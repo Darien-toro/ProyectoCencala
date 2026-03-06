@@ -42,8 +42,8 @@ public class DeliveryItemService {
                     .orElseThrow(() -> new RuntimeException("Producto no encontrado")));
         }
 
-        if (dto.getDeliveryId() != null) {
-            entity.setDeliveryEntity(deliveryRepository.findById(dto.getDeliveryId())
+        if (dto.getDelivery().getId() != null) {
+            entity.setDeliveryEntity(deliveryRepository.findById(dto.getDelivery().getId())
                     .orElseThrow(() -> new RuntimeException("Delivery no encontrado")));
         }
 
@@ -55,15 +55,13 @@ public class DeliveryItemService {
         DeliveryItemEntity entity = deliveryItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Delivery Item no encontrado"));
 
-        deliveryItemMapper.updateEntityFromDto(dto, entity);
-
         if (dto.getProductId() != null) {
             entity.setProductEntity(productRepository.findById(dto.getProductId())
                     .orElseThrow(() -> new RuntimeException("Producto no encontrado")));
         }
 
-        if (dto.getDeliveryId() != null) {
-            entity.setDeliveryEntity(deliveryRepository.findById(dto.getDeliveryId())
+        if (dto.getDelivery().getId() != null) {
+            entity.setDeliveryEntity(deliveryRepository.findById(dto.getDelivery().getId())
                     .orElseThrow(() -> new RuntimeException("Delivery no encontrado")));
         }
 

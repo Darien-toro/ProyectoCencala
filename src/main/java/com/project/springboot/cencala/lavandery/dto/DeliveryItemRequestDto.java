@@ -15,6 +15,6 @@ public class DeliveryItemRequestDto {
     private String notes;
     private BigDecimal compensationAmount;
     private Integer productId;
-    private Integer deliveryId; 
+    private DeliveryDto delivery;
 }
 

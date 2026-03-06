@@ -19,35 +19,35 @@ import com.project.springboot.cencala.lavandery.service.ProductService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/product")
 @AllArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getAllProducts() {
-        return ResponseEntity.ok(productService.getAllProducts());
+    public ResponseEntity<List<ProductDto>> findAll() {
+        return ResponseEntity.ok(productService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable Integer id) {
-        return ResponseEntity.ok(productService.getProductById(id));
+    public ResponseEntity<ProductDto> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(productService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductRequestDto dto) {
-        return ResponseEntity.ok(productService.createProduct(dto));
+    public ResponseEntity<ProductDto> save(@RequestBody ProductRequestDto dto) {
+        return ResponseEntity.ok(productService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable Integer id, @RequestBody ProductRequestDto dto) {
-        return ResponseEntity.ok(productService.updateProduct(id, dto));
+    public ResponseEntity<ProductDto> update(@PathVariable Integer id, @RequestBody ProductRequestDto dto) {
+        return ResponseEntity.ok(productService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
-        productService.deleteProduct(id);
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        productService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

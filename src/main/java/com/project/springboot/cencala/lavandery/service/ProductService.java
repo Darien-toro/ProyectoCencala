@@ -21,44 +21,44 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final ProductLineRepository productLineRepository;
 
-    public List<ProductDto> getAllProducts() {
+    public List<ProductDto> findAll() {
         return productRepository.findAll()
                 .stream()
                 .map(productMapper::toDto)
                 .toList();
     }
 
-    public ProductDto getProductById(Integer id) {
+    public ProductDto findById(Integer id) {
         ProductEntity entity = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
         return productMapper.toDto(entity);
     }
 
-    public ProductDto createProduct(ProductRequestDto dto) {
+    public ProductDto save(ProductRequestDto dto) {
         ProductEntity entity = productMapper.toEntity(dto);
 
-        if (dto.getProductLineId() != null) {
-            entity.setProductLineEntity(productLineRepository.findById(dto.getProductLineId())
+        if (dto.getProductLine().getId() != null) {
+            entity.setProductLineEntity(productLineRepository.findById(dto.getProductLine().getId())
                     .orElseThrow(() -> new RuntimeException("Línea de producto no encontrada")));
         }
 
-        ProductEntity saved = productRepository.save(entity);
+        ProductEntity saved = productRepository.save(productMapper.toEntity(dto));
         return productMapper.toDto(saved);
     }
 
-    public ProductDto updateProduct(Integer id, ProductRequestDto dto) {
+    public ProductDto update(Integer id, ProductRequestDto dto) {
         productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-        if (dto.getProductLineId() != null) {
-            productLineRepository.findById(dto.getProductLineId())
+        if (dto.getProductLine().getId() != null) {
+            productLineRepository.findById(dto.getProductLine().getId())
                     .orElseThrow(() -> new RuntimeException("Línea de producto no encontrada"));
         }
         ProductEntity updated = productRepository.save(productMapper.toEntity(dto));
         return productMapper.toDto(updated);
     }
 
-    public void deleteProduct(Integer id) {
+    public void delete(Integer id) {
         ProductEntity entity = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
         productRepository.delete(entity);
