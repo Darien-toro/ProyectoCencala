@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class OrderItemRequestDto {
+    private Integer id;
     private Integer quantity;
     private ProductDto product; // el cliente envía el ID del producto
     private OrderDto order;   // el cliente envía el ID de la orden

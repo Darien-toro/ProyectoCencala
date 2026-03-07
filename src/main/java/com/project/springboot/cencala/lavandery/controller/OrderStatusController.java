@@ -46,6 +46,7 @@ public class OrderStatusController {
     
     @PutMapping("/{id}")
     public ResponseEntity<OrderStatusDto> update(@PathVariable Integer id, @RequestBody OrderStatusDto dto){
+        dto.setId(id);
         OrderStatusDto update = orderStatusService.update(id, dto);
         return ResponseEntity.ok(update);
     }

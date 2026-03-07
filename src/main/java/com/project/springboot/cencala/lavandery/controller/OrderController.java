@@ -20,32 +20,31 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/api/order")
 public class OrderController {
-
     private final OrderService orderService;
-
     @GetMapping
-    public ResponseEntity<List<OrderResponseDto>> getAllOrders() {
-        return ResponseEntity.ok(orderService.getAllOrders());
+    public ResponseEntity<List<OrderResponseDto>> findAll() {
+        return ResponseEntity.ok(orderService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderResponseDto> getOrderById(@PathVariable Integer id) {
-        return ResponseEntity.ok(orderService.getOrderById(id));
+    public ResponseEntity<OrderResponseDto> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(orderService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderRequestDto dto) {
-        return ResponseEntity.ok(orderService.createOrderDto(dto));
+    public ResponseEntity<OrderResponseDto> save(@RequestBody OrderRequestDto dto) {
+        return ResponseEntity.ok(orderService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderResponseDto> updateOrder(@PathVariable Integer id, @RequestBody OrderRequestDto dto) {
-        return ResponseEntity.ok(orderService.updateOrder(id, dto));
+    public ResponseEntity<OrderResponseDto> update(@PathVariable Integer id, @RequestBody OrderRequestDto dto) {
+        dto.setId(id);
+        return ResponseEntity.ok(orderService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Integer id) {
-        orderService.deleteOrder(id);
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        orderService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

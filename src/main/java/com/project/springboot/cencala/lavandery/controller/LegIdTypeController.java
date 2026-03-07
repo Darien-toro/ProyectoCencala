@@ -47,6 +47,7 @@ public class LegIdTypeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<LegIdTypeDto> update(@PathVariable Integer id, @RequestBody LegIdTypeDto dto){
+        dto.setId(id);
         LegIdTypeDto update = legIdTypeService.update(id, dto);
         return ResponseEntity.ok(update);
     }

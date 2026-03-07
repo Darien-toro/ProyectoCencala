@@ -2,6 +2,8 @@ package com.project.springboot.cencala.lavandery.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.project.springboot.cencala.lavandery.mapper.LegIdTypeMapper;
 import org.springframework.stereotype.Service;
 
 import com.project.springboot.cencala.lavandery.dto.CustomerCreateDto;
@@ -21,10 +23,25 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final LegIdTypeRepository legIdTypeRepository;
     private final CustomerMapper customerMapper;
+    private final LegIdTypeMapper legIdTypeMapper;
 
-    public CustomerDto createCustomer(CustomerCreateDto dto){
+    public List<CustomerDto> findAll() {
+        return customerRepository.findAll()
+                .stream()
+                .map(customerMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public CustomerDto findById(Integer id) {
+        CustomerEntity entity = customerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No encontrado"));
+        return customerMapper.toDTO(entity);
+    }
+
+    public CustomerDto save(CustomerCreateDto dto) {
         LegIdTypeEntity legIdTypeEntity = legIdTypeRepository.findById(dto.getLegIdType().getId())
-        .orElseThrow(() -> new RuntimeException("Id no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Id no encontrado"));
+        dto.setLegIdType(legIdTypeMapper.toDto(legIdTypeEntity));
 
         CustomerEntity entity = customerMapper.toEntity(dto);
         entity.setLegIdTypeEntity(legIdTypeEntity);
@@ -33,37 +50,24 @@ public class CustomerService {
 
         return customerMapper.toDTO(saved);
     }
-
-    public List<CustomerDto> getAllCustomers(){
-        return customerRepository.findAll()
-        .stream()
-        .map(customerMapper::toDTO)
-        .collect(Collectors.toList());
-    }
-
-    public CustomerDto getCustomerById(Integer id){
-        CustomerEntity entity = customerRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("No encontrado"));
-        return customerMapper.toDTO(entity);
-    }
-
-    public void deleteCustomer(Integer id){
-        CustomerEntity entity = customerRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
-        customerRepository.delete(entity);
-    }
-    public CustomerDto updateCustomer(Integer id, CustomerCreateDto dto){
+    public CustomerDto update(Integer id, CustomerCreateDto dto){
         customerRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("No encontrado"));
+                .orElseThrow(() -> new RuntimeException("No encontrado"));
 
 
         if (dto.getLegIdType().getId() != null) {
-            legIdTypeRepository.findById(dto.getLegIdType().getId())
-                .orElseThrow(() -> new RuntimeException(" tipo no encontrado"));
+            LegIdTypeEntity legIdTypeEntity = legIdTypeRepository.findById(dto.getLegIdType().getId())
+                    .orElseThrow(() -> new RuntimeException(" tipo no encontrado"));
+            dto.setLegIdType(legIdTypeMapper.toDto(legIdTypeEntity));
         }
         CustomerEntity customerEntity = customerMapper.toEntity(dto);
         CustomerEntity update = customerRepository.save(customerEntity);
         return customerMapper.toDTO(update);
-        }
+    }
+    public void delete(Integer id) {
+        CustomerEntity entity = customerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+        customerRepository.delete(entity);
     }
 
+}

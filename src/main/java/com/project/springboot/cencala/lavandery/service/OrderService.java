@@ -2,6 +2,8 @@ package com.project.springboot.cencala.lavandery.service;
 
 import java.util.List;
 
+import com.project.springboot.cencala.lavandery.mapper.CustomerMapper;
+import com.project.springboot.cencala.lavandery.mapper.OrderStatusMapper;
 import org.springframework.stereotype.Service;
 import com.project.springboot.cencala.lavandery.dto.OrderRequestDto;
 import com.project.springboot.cencala.lavandery.dto.OrderResponseDto;
@@ -22,65 +24,71 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final OrderStatusRepository orderStatusRepository;
     private final CustomerRepository customerRepository;
+    private final OrderStatusMapper orderStatusMapper;
+    private final CustomerMapper customerMapper;
 
-    public List<OrderResponseDto> getAllOrders(){
+    public List<OrderResponseDto> findAll(){
         return orderRepository.findAll()
         .stream()
         .map(orderMapper::toResponseDto)
         .toList();
     }
 
-    public OrderResponseDto getOrderById(Integer id){
+    public OrderResponseDto findById(Integer id){
         OrderEntity entity = orderRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
         return orderMapper.toResponseDto(entity);
     }
 
-    public OrderResponseDto createOrderDto(OrderRequestDto dto){
+    public OrderResponseDto save(OrderRequestDto dto){
         OrderEntity entity = orderMapper.toEntity(dto);
 
-        if (dto.getCustomerId() != null) {
-            entity.setOrderStatusEntity(orderStatusRepository.findById(dto.getOrderStatusId())
-            .orElseThrow(() -> new RuntimeException("Estado no encontrado")));           
+        if (dto.getOrderStatus().getId() != null) {
+            entity.setOrderStatusEntity(orderStatusRepository.findById(dto.getOrderStatus().getId())
+            .orElseThrow(() -> new RuntimeException("Estado no encontrado")));
+            dto.setOrderStatus(orderStatusMapper.toDTO(entity.getOrderStatusEntity()));
         }
-        if(dto.getCustomerId() != null){
-            entity.setCustomerEntity(customerRepository.findById(dto.getCustomerId())
+        if(dto.getCustomer().getId() != null){
+            entity.setCustomerEntity(customerRepository.findById(dto.getCustomer().getId())
             .orElseThrow(() -> new RuntimeException("Cliente no encontrado")));
+            dto.setCustomer(customerMapper.toDTO(entity.getCustomerEntity()));
         }
 
-        entity.setCode("PENDING");
+        dto.setCode("PENDING");
         
-        OrderEntity saved = orderRepository.save(entity);
+        OrderEntity saved = orderRepository.save(orderMapper.toEntity(dto));
 
         saved.setCode(String.format("OS-%d", saved.getId()));
         saved = orderRepository.save(saved);
         return orderMapper.toResponseDto(saved);
     }
 
-        public void deleteOrder(Integer id){
-        OrderEntity entity = orderRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Orden no encontrado"));
-        orderRepository.delete(entity);
-    }
-
-    public OrderResponseDto updateOrder(Integer id, OrderRequestDto dto){
+    public OrderResponseDto update(Integer id, OrderRequestDto dto){
         OrderEntity entity = orderRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
 
         entity.setCode(dto.getCode());
 
-        if(dto.getOrderStatusId() != null){
-            entity.setOrderStatusEntity(orderStatusRepository.findById(dto.getOrderStatusId())
+        if(dto.getOrderStatus().getId() != null){
+            entity.setOrderStatusEntity(orderStatusRepository.findById(dto.getOrderStatus().getId())
             .orElseThrow(() -> new RuntimeException("Estado no encontrada")));
+            dto.setOrderStatus(orderStatusMapper.toDTO(entity.getOrderStatusEntity()));
         }
-        if(dto.getCustomerId() != null) {
-            entity.setCustomerEntity(customerRepository.findById(dto.getCustomerId())
+        if(dto.getCustomer().getId() != null) {
+            entity.setCustomerEntity(customerRepository.findById(dto.getCustomer().getId())
         .orElseThrow(() -> new RuntimeException("Cliente no encontrada")));
+            dto.setCustomer(customerMapper.toDTO(entity.getCustomerEntity()));
         }
-        OrderEntity update = orderRepository.save(entity);
+        OrderEntity update = orderRepository.save(orderMapper.toEntity(dto));
         return orderMapper.toResponseDto(update);
     }
-    
+
+    public void delete(Integer id){
+        OrderEntity entity = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Orden no encontrado"));
+        orderRepository.delete(entity);
+    }
+
     public List<OrderWithItemsDto> getOrdersWithItemsByCustomerId(Integer customerId) {
         return orderRepository.findOrdersWithItemsByCustomerId(customerId);
     }

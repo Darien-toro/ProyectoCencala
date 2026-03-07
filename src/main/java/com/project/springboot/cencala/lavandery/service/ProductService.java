@@ -38,8 +38,10 @@ public class ProductService {
         ProductEntity entity = productMapper.toEntity(dto);
 
         if (dto.getProductLine().getId() != null) {
+
             entity.setProductLineEntity(productLineRepository.findById(dto.getProductLine().getId())
                     .orElseThrow(() -> new RuntimeException("Línea de producto no encontrada")));
+            dto.setProductLine(productMapper.toDto(entity).getProductLine());
         }
 
         ProductEntity saved = productRepository.save(productMapper.toEntity(dto));
@@ -47,12 +49,14 @@ public class ProductService {
     }
 
     public ProductDto update(Integer id, ProductRequestDto dto) {
+        ProductEntity entity = productMapper.toEntity(dto);
         productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
         if (dto.getProductLine().getId() != null) {
-            productLineRepository.findById(dto.getProductLine().getId())
-                    .orElseThrow(() -> new RuntimeException("Línea de producto no encontrada"));
+             entity.setProductLineEntity(productLineRepository.findById(dto.getProductLine().getId())
+                    .orElseThrow(() -> new RuntimeException("Línea de producto no encontrada")));
+            dto.setProductLine(productMapper.toDto(entity).getProductLine());
         }
         ProductEntity updated = productRepository.save(productMapper.toEntity(dto));
         return productMapper.toDto(updated);
