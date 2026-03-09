@@ -18,37 +18,33 @@ public class InvoiceOrderItemService {
     private final InvoiceOrderItemRepository invoiceOrderItemRepository;
     private final InvoiceOrderItemMapper invoiceOrderItemMapper;
 
-    // Obtener todos los ítems
     @Transactional(readOnly = true)
-    public List<InvoiceOrderItemDTO> getAllItems() {
+    public List<InvoiceOrderItemDTO> getAll() {
         return invoiceOrderItemRepository.findAll()
                                          .stream()
-                                         .map(invoiceOrderItemMapper::toDTO)
+                                         .map(invoiceOrderItemMapper::toDto)
                                          .collect(Collectors.toList());
     }
 
-    // Obtener ítems por ID de factura
     @Transactional(readOnly = true)
-    public List<InvoiceOrderItemDTO> getItemsByInvoiceOrderId(Integer invoiceOrderId) {
+    public List<InvoiceOrderItemDTO> getId(Integer invoiceOrderId) {
         return invoiceOrderItemRepository.findByInvoiceOrderEntity_Id(invoiceOrderId)
                                          .stream()
-                                         .map(invoiceOrderItemMapper::toDTO)
+                                         .map(invoiceOrderItemMapper::toDto)
                                          .collect(Collectors.toList());
     }
 
-    // Actualizar un ítem
     @Transactional
-    public InvoiceOrderItemDTO updateItem(Integer id, InvoiceOrderItemDTO dto) {
+    public InvoiceOrderItemDTO update(Integer id, InvoiceOrderItemDTO dto) {
         InvoiceOrderItemEntity entity = invoiceOrderItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Item no encontrado"));
         entity.setTotalAmount(dto.getTotalAmount());
         entity.setCompensationAmount(dto.getCompensationAmount());
-        return invoiceOrderItemMapper.toDTO(invoiceOrderItemRepository.save(entity));
+        return invoiceOrderItemMapper.toDto(invoiceOrderItemRepository.save(entity));
     }
 
-    // Eliminar un ítem
     @Transactional
-    public void deleteItem(Integer id) {
+    public void delete(Integer id) {
         invoiceOrderItemRepository.deleteById(id);
     }
 }

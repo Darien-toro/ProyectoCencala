@@ -1,7 +1,6 @@
 package com.project.springboot.cencala.lavandery.service;
 
 import com.project.springboot.cencala.lavandery.dto.OrderItemDto;
-import com.project.springboot.cencala.lavandery.dto.OrderItemRequestDto;
 import com.project.springboot.cencala.lavandery.entity.OrderItemEntity;
 import com.project.springboot.cencala.lavandery.entity.ProductEntity;
 import com.project.springboot.cencala.lavandery.entity.OrderEntity;
@@ -37,7 +36,7 @@ public class OrderItemService {
         return orderItemMapper.toDto(entity);
     }
 
-    public OrderItemDto save(OrderItemRequestDto dto) {
+    public OrderItemDto save(OrderItemDto dto) {
         OrderItemEntity entity = orderItemMapper.toEntity(dto);
 
         // Buscar producto y asignar precio
@@ -60,7 +59,7 @@ public class OrderItemService {
         return orderItemMapper.toDto(saved);
     }
 
-    public OrderItemDto update(Integer id, OrderItemRequestDto dto) {
+    public OrderItemDto update(Integer id, OrderItemDto dto) {
         OrderItemEntity entity = orderItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order Item no encontrado"));
 

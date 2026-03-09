@@ -5,8 +5,8 @@ import java.util.List;
 import com.project.springboot.cencala.lavandery.mapper.CustomerMapper;
 import com.project.springboot.cencala.lavandery.mapper.OrderStatusMapper;
 import org.springframework.stereotype.Service;
-import com.project.springboot.cencala.lavandery.dto.OrderRequestDto;
-import com.project.springboot.cencala.lavandery.dto.OrderResponseDto;
+
+import com.project.springboot.cencala.lavandery.dto.OrderDto;
 import com.project.springboot.cencala.lavandery.dto.OrderWithItemsDto;
 import com.project.springboot.cencala.lavandery.entity.OrderEntity;
 import com.project.springboot.cencala.lavandery.mapper.OrderMapper;
@@ -27,20 +27,20 @@ public class OrderService {
     private final OrderStatusMapper orderStatusMapper;
     private final CustomerMapper customerMapper;
 
-    public List<OrderResponseDto> findAll(){
+    public List<OrderDto> findAll(){
         return orderRepository.findAll()
         .stream()
-        .map(orderMapper::toResponseDto)
+        .map(orderMapper::toDto)
         .toList();
     }
 
-    public OrderResponseDto findById(Integer id){
+    public OrderDto findById(Integer id){
         OrderEntity entity = orderRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
-        return orderMapper.toResponseDto(entity);
+        return orderMapper.toDto(entity);
     }
 
-    public OrderResponseDto save(OrderRequestDto dto){
+    public OrderDto save(OrderDto dto){
         OrderEntity entity = orderMapper.toEntity(dto);
 
         if (dto.getOrderStatus().getId() != null) {
@@ -60,10 +60,10 @@ public class OrderService {
 
         saved.setCode(String.format("OS-%d", saved.getId()));
         saved = orderRepository.save(saved);
-        return orderMapper.toResponseDto(saved);
+        return orderMapper.toDto(saved);
     }
 
-    public OrderResponseDto update(Integer id, OrderRequestDto dto){
+    public OrderDto update(Integer id, OrderDto dto){
         OrderEntity entity = orderRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
 
@@ -80,7 +80,7 @@ public class OrderService {
             dto.setCustomer(customerMapper.toDTO(entity.getCustomerEntity()));
         }
         OrderEntity update = orderRepository.save(orderMapper.toEntity(dto));
-        return orderMapper.toResponseDto(update);
+        return orderMapper.toDto(update);
     }
 
     public void delete(Integer id){

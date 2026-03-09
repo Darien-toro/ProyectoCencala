@@ -29,10 +29,9 @@ public class ProductLineService {
                 .orElseThrow(() -> new RuntimeException("Línea de producto no encontrada"));
         return productLineMapper.toDto(entity);
     }
-
     public ProductLineDto save(ProductLineDto dto) {
         ProductLineEntity entity = productLineMapper.toEntity(dto);
-        ProductLineEntity saved = productLineRepository.save(productLineMapper.toEntity(dto));
+        ProductLineEntity saved = productLineRepository.save(entity);
         return productLineMapper.toDto(saved);
     }
 

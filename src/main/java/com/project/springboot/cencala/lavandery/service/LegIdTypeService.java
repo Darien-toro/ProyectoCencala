@@ -2,14 +2,11 @@ package com.project.springboot.cencala.lavandery.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
-
 import com.project.springboot.cencala.lavandery.dto.LegIdTypeDto;
 import com.project.springboot.cencala.lavandery.entity.LegIdTypeEntity;
 import com.project.springboot.cencala.lavandery.mapper.LegIdTypeMapper;
 import com.project.springboot.cencala.lavandery.repository.LegIdTypeRepository;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -43,8 +40,9 @@ public class LegIdTypeService {
     public LegIdTypeDto update(Integer id, LegIdTypeDto dto){
         LegIdTypeEntity entity = legIdTypeRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("No encontrado"));
-
-        LegIdTypeEntity update = legIdTypeRepository.save(legIdTypeMapper.toEntity(dto));
+        entity.setName(dto.getName());
+        entity.setAbbrev(dto.getAbbrev());
+        LegIdTypeEntity update = legIdTypeRepository.save(entity);
         return legIdTypeMapper.toDto(update);
     }
 }

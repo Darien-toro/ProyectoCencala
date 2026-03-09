@@ -6,15 +6,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {
-    UserTypeMapper.class
-})
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {UserTypeMapper.class, CustomerMapper.class})
 public interface UserMapper {
 
-    @Mapping(source = "userType.id", target = "userTypeId")
-    @Mapping(source = "customer.id", target = "customerId")
+    @Mapping(source = "userTypeEntity", target = "userType")
+    @Mapping(source = "customerEntity", target = "customer")
     UserDto toDto(UserEntity entity);
 
-    // No intentes mapear IDs a objetos aquí
+    @Mapping(source = "userType", target = "userTypeEntity")
+    @Mapping(source = "customer", target = "customerEntity")
     UserEntity toEntity(UserDto dto);
 }

@@ -1,7 +1,6 @@
 package com.project.springboot.cencala.lavandery.controller;
 
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.project.springboot.cencala.lavandery.dto.CustomerCreateDto;
 import com.project.springboot.cencala.lavandery.dto.CustomerDto;
 import com.project.springboot.cencala.lavandery.service.CustomerService;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -38,13 +34,13 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDto> save(@RequestBody CustomerCreateDto dto){
+    public ResponseEntity<CustomerDto> save(@RequestBody CustomerDto dto){
         CustomerDto created = customerService.save(dto);
         return ResponseEntity.ok(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerDto> update(@PathVariable Integer id, @RequestBody CustomerCreateDto dto){
+    public ResponseEntity<CustomerDto> update(@PathVariable Integer id, @RequestBody CustomerDto dto){
         dto.setId(id);
         CustomerDto updated = customerService.update(id, dto);
         return ResponseEntity.ok(updated);

@@ -35,11 +35,11 @@ public class UserEntity {
 
     @ManyToOne
     @JoinColumn(name = "usertype_id", nullable = false)
-    private UserTypeEntity userType;
+    private UserTypeEntity userTypeEntity;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
-    private CustomerEntity customer;
+    private CustomerEntity customerEntity;
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
