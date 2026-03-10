@@ -1,15 +1,17 @@
 package com.project.springboot.cencala.lavandery.service;
 
 import com.project.springboot.cencala.lavandery.dto.DeliveryItemDto;
-import com.project.springboot.cencala.lavandery.dto.DeliveryItemRequestDto;
+import com.project.springboot.cencala.lavandery.entity.DeliveryEntity;
 import com.project.springboot.cencala.lavandery.entity.DeliveryItemEntity;
+import com.project.springboot.cencala.lavandery.entity.ProductEntity;
 import com.project.springboot.cencala.lavandery.mapper.DeliveryItemMapper;
+import com.project.springboot.cencala.lavandery.mapper.DeliveryMapper;
+import com.project.springboot.cencala.lavandery.mapper.ProductMapper;
 import com.project.springboot.cencala.lavandery.repository.DeliveryItemRepository;
 import com.project.springboot.cencala.lavandery.repository.ProductRepository;
 import com.project.springboot.cencala.lavandery.repository.DeliveryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -20,29 +22,31 @@ public class DeliveryItemService {
     private final DeliveryItemMapper deliveryItemMapper;
     private final ProductRepository productRepository;
     private final DeliveryRepository deliveryRepository;
+    private final ProductMapper productMapper;
+    private final DeliveryMapper deliveryMapper;
 
-    public List<DeliveryItemDto> getAllDeliveryItems() {
+    public List<DeliveryItemDto> getAll() {
         return deliveryItemRepository.findAll()
                 .stream()
                 .map(deliveryItemMapper::toDto)
                 .toList();
     }
 
-    public DeliveryItemDto getDeliveryItemById(Integer id) {
+    public DeliveryItemDto getById(Integer id) {
         DeliveryItemEntity entity = deliveryItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Delivery Item no encontrado"));
         return deliveryItemMapper.toDto(entity);
     }
 
-    public DeliveryItemDto createDeliveryItem(DeliveryItemRequestDto dto) {
+    public DeliveryItemDto create(DeliveryItemDto dto) {
         DeliveryItemEntity entity = deliveryItemMapper.toEntity(dto);
 
-        if (dto.getProductId() != null) {
-            entity.setProductEntity(productRepository.findById(dto.getProductId())
+        if (dto.getProduct() != null) {
+            entity.setProductEntity(productRepository.findById(dto.getProduct().getId())
                     .orElseThrow(() -> new RuntimeException("Producto no encontrado")));
         }
 
-        if (dto.getDelivery().getId() != null) {
+        if (dto.getDelivery() != null) {
             entity.setDeliveryEntity(deliveryRepository.findById(dto.getDelivery().getId())
                     .orElseThrow(() -> new RuntimeException("Delivery no encontrado")));
         }
@@ -51,25 +55,27 @@ public class DeliveryItemService {
         return deliveryItemMapper.toDto(saved);
     }
 
-    public DeliveryItemDto updateDeliveryItem(Integer id, DeliveryItemRequestDto dto) {
-        DeliveryItemEntity entity = deliveryItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Delivery Item no encontrado"));
+    public DeliveryItemDto update(Integer id, DeliveryItemDto dto) {
+        deliveryItemRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Delivery Item no encontrado"));
 
-        if (dto.getProductId() != null) {
-            entity.setProductEntity(productRepository.findById(dto.getProductId())
-                    .orElseThrow(() -> new RuntimeException("Producto no encontrado")));
+        if (dto.getProduct().getId() != null) {
+            ProductEntity productEntity = productRepository.findById(dto.getProduct().getId()) 
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+            dto.setProduct(productMapper.toDto(productEntity));
         }
 
-        if (dto.getDelivery().getId() != null) {
-            entity.setDeliveryEntity(deliveryRepository.findById(dto.getDelivery().getId())
-                    .orElseThrow(() -> new RuntimeException("Delivery no encontrado")));
+        if (dto.getDelivery() != null) {
+            DeliveryEntity deliveryEntity = deliveryRepository.findById(dto.getDelivery().getId())
+                    .orElseThrow(() -> new RuntimeException("Delivery no encontrado"));
+            dto.setDelivery(deliveryMapper.toDto(deliveryEntity));
         }
-
-        DeliveryItemEntity updated = deliveryItemRepository.save(entity);
-        return deliveryItemMapper.toDto(updated);
+        DeliveryItemEntity deliveryItemEntity = deliveryItemMapper.toEntity(dto);
+        DeliveryItemEntity update = deliveryItemRepository.save(deliveryItemEntity);
+        return deliveryItemMapper.toDto(update);
     }
 
-    public void deleteDeliveryItem(Integer id) {
+    public void delete(Integer id) {
         DeliveryItemEntity entity = deliveryItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Delivery Item no encontrado"));
         deliveryItemRepository.delete(entity);

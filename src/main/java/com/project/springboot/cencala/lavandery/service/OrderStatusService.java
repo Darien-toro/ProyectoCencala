@@ -45,7 +45,8 @@ public class OrderStatusService {
     public OrderStatusDto update(Integer id, OrderStatusDto dto){
         OrderStatusEntity entity = orderStatusRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("No encontrado"));
-        OrderStatusEntity update = orderStatusRepository.save(orderStatusMapper.toEntity(dto));
+        entity.setName(dto.getName());
+        OrderStatusEntity update = orderStatusRepository.save(entity);
         return orderStatusMapper.toDTO(update);
     }
 }

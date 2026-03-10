@@ -1,16 +1,12 @@
 package com.project.springboot.cencala.lavandery.service;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.project.springboot.cencala.lavandery.dto.ProductDto;
-import com.project.springboot.cencala.lavandery.dto.ProductRequestDto;
 import com.project.springboot.cencala.lavandery.entity.ProductEntity;
 import com.project.springboot.cencala.lavandery.mapper.ProductMapper;
 import com.project.springboot.cencala.lavandery.repository.ProductRepository;
 import com.project.springboot.cencala.lavandery.repository.ProductLineRepository;
-
 import lombok.AllArgsConstructor;
 
 @Service
@@ -34,7 +30,7 @@ public class ProductService {
         return productMapper.toDto(entity);
     }
 
-    public ProductDto save(ProductRequestDto dto) {
+    public ProductDto save(ProductDto dto) {
         ProductEntity entity = productMapper.toEntity(dto);
 
         if (dto.getProductLine().getId() != null) {
@@ -48,7 +44,7 @@ public class ProductService {
         return productMapper.toDto(saved);
     }
 
-    public ProductDto update(Integer id, ProductRequestDto dto) {
+    public ProductDto update(Integer id, ProductDto dto) {
         ProductEntity entity = productMapper.toEntity(dto);
         productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));

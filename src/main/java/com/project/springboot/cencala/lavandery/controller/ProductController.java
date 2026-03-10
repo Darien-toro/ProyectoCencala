@@ -1,7 +1,6 @@
 package com.project.springboot.cencala.lavandery.controller;
 
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.project.springboot.cencala.lavandery.dto.ProductDto;
-import com.project.springboot.cencala.lavandery.dto.ProductRequestDto;
 import com.project.springboot.cencala.lavandery.service.ProductService;
-
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -36,12 +32,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> save(@RequestBody ProductRequestDto dto) {
+    public ResponseEntity<ProductDto> save(@RequestBody ProductDto dto) {
         return ResponseEntity.ok(productService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDto> update(@PathVariable Integer id, @RequestBody ProductRequestDto dto) {
+    public ResponseEntity<ProductDto> update(@PathVariable Integer id, @RequestBody ProductDto dto) {
         dto.setId(id);
         return ResponseEntity.ok(productService.update(id, dto));
     }

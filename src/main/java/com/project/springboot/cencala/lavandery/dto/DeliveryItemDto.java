@@ -1,7 +1,6 @@
 package com.project.springboot.cencala.lavandery.dto;
 
 import java.math.BigDecimal;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,7 @@ public class DeliveryItemDto {
     private Integer compensationQuantity;
     private String notes;
     private BigDecimal compensationAmount;
-    private String productName;
+    private ProductDto product;
     private DeliveryDto delivery;
 }
 

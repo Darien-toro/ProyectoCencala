@@ -49,8 +49,8 @@ public class DeliveryService {
                 .orElseThrow(() -> new RuntimeException("Entrega no encontrada"));
 
         if (dto.getOrder().getId() != null) {
-            entity.setOrderEntity(orderRepository.findById(dto.getId())
-                    .orElseThrow(() -> new RuntimeException("Orden no encontrada")));
+            entity.setOrderEntity(orderRepository.findById(dto.getOrder().getId())
+                 .orElseThrow(() -> new RuntimeException("Orden no encontrada")));
         }
 
         DeliveryEntity updated = deliveryRepository.save(entity);

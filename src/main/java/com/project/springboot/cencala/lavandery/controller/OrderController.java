@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.project.springboot.cencala.lavandery.dto.OrderRequestDto;
-import com.project.springboot.cencala.lavandery.dto.OrderResponseDto;
+import com.project.springboot.cencala.lavandery.dto.OrderDto;
 import com.project.springboot.cencala.lavandery.dto.OrderWithItemsDto;
 import com.project.springboot.cencala.lavandery.service.OrderService;
 import lombok.AllArgsConstructor;
@@ -22,22 +21,22 @@ import lombok.AllArgsConstructor;
 public class OrderController {
     private final OrderService orderService;
     @GetMapping
-    public ResponseEntity<List<OrderResponseDto>> findAll() {
+    public ResponseEntity<List<OrderDto>> findAll() {
         return ResponseEntity.ok(orderService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderResponseDto> findById(@PathVariable Integer id) {
+    public ResponseEntity<OrderDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(orderService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<OrderResponseDto> save(@RequestBody OrderRequestDto dto) {
+    public ResponseEntity<OrderDto> save(@RequestBody OrderDto dto) {
         return ResponseEntity.ok(orderService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderResponseDto> update(@PathVariable Integer id, @RequestBody OrderRequestDto dto) {
+    public ResponseEntity<OrderDto> update(@PathVariable Integer id, @RequestBody OrderDto dto) {
         dto.setId(id);
         return ResponseEntity.ok(orderService.update(id, dto));
     }

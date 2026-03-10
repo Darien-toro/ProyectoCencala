@@ -1,14 +1,8 @@
 package com.project.springboot.cencala.lavandery.dto;
 
-import com.project.springboot.cencala.lavandery.entity.CustomerEntity;
-import com.project.springboot.cencala.lavandery.entity.OrderStatusEntity;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
