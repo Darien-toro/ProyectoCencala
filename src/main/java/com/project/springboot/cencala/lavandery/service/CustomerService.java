@@ -50,7 +50,6 @@ public class CustomerService {
         customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No encontrado"));
 
-
         if (dto.getLegIdType().getId() != null) {
             LegIdTypeEntity legIdTypeEntity = legIdTypeRepository.findById(dto.getLegIdType().getId())
                     .orElseThrow(() -> new RuntimeException(" tipo no encontrado"));

@@ -8,12 +8,12 @@ import com.project.springboot.cencala.lavandery.entity.DeliveryItemEntity;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {ProductMapper.class, DeliveryMapper.class})
 public interface DeliveryItemMapper {
-    @Mapping(source = "productEntity.id", target = "productId")
-    @Mapping(source = "deliveryEntity.id", target = "deliveryId")
+    @Mapping(source = "productEntity", target = "product")
+    @Mapping(source = "deliveryEntity", target = "delivery")
     DeliveryItemDto toDto(DeliveryItemEntity entity);
 
-    @Mapping(source = "productId", target = "productEntity.id")
-    @Mapping(source = "deliveryId", target = "deliveryEntity.id")
+    @Mapping(source = "product", target = "productEntity")
+    @Mapping(source = "delivery", target = "deliveryEntity")
     DeliveryItemEntity toEntity(DeliveryItemDto dto);
 }
 
