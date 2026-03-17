@@ -13,14 +13,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "user_type")
-public class UserTypeEntity {
-
+@Table(name = "tbl_role")
+public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "role_id")
     private Integer id;
 
-    @Column(name = "user_type", nullable = false)
-    private String userType;
+    @Column(name = "name", nullable = false)
+    private String name;
 }

@@ -11,41 +11,43 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "user")
-public class UserEntity {
+@Table(name = "tbl_user_account")
+public class UserAccountEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "user_account_id")
     private Integer id;
 
-    @Column(name = "username", nullable = false, unique = true, length = 100)
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "password", nullable = false, length = 255)
+    @Column(name = "password")
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "usertype_id", nullable = false)
-    private UserTypeEntity userTypeEntity;
+    @Column(name = "account_exp_date")
+    private LocalDate accountExpDate;
+
+    @Column(name = "password_exp_date")
+    private LocalDate passwordExpDate;
+
+    @Column(name = "is_account_locked", columnDefinition = "TINYINT(1)")
+    private Boolean  isAccountLocked;
+
+    @Column(name = "status")
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private CustomerEntity customerEntity;
 
-    @Column(name = "created_at", updatable = false)
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private RoleEntity role;
 
-    @Column(name = "updated_at")
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 }

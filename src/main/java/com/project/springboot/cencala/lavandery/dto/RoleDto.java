@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserTypeDto {
+public class RoleDto {
 
     private Integer id;
     private String userType;
